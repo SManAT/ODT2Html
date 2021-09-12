@@ -2,10 +2,5 @@ version: 1
 
 app:
    # Name of the App
-   title: O365 Admin
-azure:
-   client_id: 13bba52a-1d20-413a-88e5-040fa02fde2a
-   client_secret: IO8lo.aMB0.7hJ-S~cfLH_2wuB.h~90457
-   tenant_id: brgfrauengasse.onmicrosoft.com
-   
+   LOPath: C:\Profghghram Files\LibreOffice\program  
 

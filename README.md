@@ -9,3 +9,7 @@ Converts ODT Files into Html Files
 2. Rename to unoconv.py
 3. On Windows start the process like
    C:\"Program Files"\LibreOffice\program\python.exe <full path>unoconv.py -f pdf <full path>TestFile.odt
+
+# Configuration
+
+"C:\Program Files", "C:\Program Files (x86)" or in config.yaml

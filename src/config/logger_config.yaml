@@ -19,7 +19,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: INFO
     formatter: default
-    filename: ../O365Admin.log
+    filename: ../ODT2Html.log
     maxBytes: 1048576 # 1MB
     backupCount: 2
     encoding: utf8

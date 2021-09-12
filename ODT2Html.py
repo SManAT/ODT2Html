@@ -2,7 +2,107 @@ import sys
 
 from pathlib import Path
 import os
+from PySide6.QtWidgets import QApplication, QMainWindow
+from src.config.LoggerConfiguration import configure_logging
+import logging
+from ui_main import Ui_MainWindow
+from PySide6 import QtGui, QtCore
+from src.ConfigTool import ConfigTool
+from src.Dialogs import Dialogs
+import re
 
+class MainWindow(QMainWindow):
+    def __init__(self, screen):
+        super(MainWindow, self).__init__()
+        self.logger = logging.getLogger('MainWindow')
+        self.ui = Ui_MainWindow()
+        self.rootDir = Path(__file__).parent
+        self.configFile = os.path.join(self.rootDir, 'src', 'config', 'config.yaml')
+        self.configTool = ConfigTool(self)
+        self.config = self.configTool.load_yml()
+        
+        self.dialogs = Dialogs()
+
+        # UI Stuff
+        self.ui.setupUi(self)
+        self.setWindowTitle("ODT2Html Converter")
+        self.setWindowIcon(QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'App.ico')))
+
+        # set Size with Screen
+        geometry = screen.availableGeometry()
+        self.setFixedSize(geometry.width() * 0.8, geometry.height() * 0.7)
+
+        # Connectors
+        # self.visibleChanged.connect(self.showwEvent)
+        self.ui.convertBtn.clicked.connect(self.convert)
+        
+        # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
+        # self.dialogs.showErrorDialog("Oh dear!", "Something went very wrong.\n\njhghghgi", icon)
+      
+
+    def show(self):
+        QMainWindow.show(self)
+        QtCore.QTimer.singleShot(500, lambda: self.checkLibreOfficePath())
+        #self.checkLibreOfficePath()
+        
+    def showStatusMessage(self, msg, time):
+        """ show a Statusmessage now """
+        self.ui.statusbar.showMessage(msg, time)
+        QApplication.processEvents()
+
+    def checkLibreOfficePath(self):
+        """ search for LO if its set probably """
+        self.showStatusMessage("Searching for LibreOffice Path ...", 2000)
+        
+        
+        loPath = self.config['app']['LOPath']
+        # test if there is python.exe and soffice.exe
+        if self.LOCheck(loPath) is True:
+            self.LOPath = loPath
+        else:
+            self.LOPath = self.searchLO()
+            # check again
+            if self.LOCheck(self.LOPath) is False:
+                icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
+                self.dialogs.showErrorDialog("Error!", "Can't find path to LibreOffice\nPlease set it manualy in config.yaml ...", icon)
+        
+        self.showStatusMessage("Found a Path to LibreOffice ...", 2000)
+        # write Back to Config
+        #self.updateConfig()
+            
+    def searchLO(self):
+        """ search for Libre Office """
+        paths = ["C:\\Program Files", "C:\\Program Files (x86)"]
+        for p in paths:
+            for root, dirs, files in os.walk(p):  # noqa
+                # print(root)
+                result = re.search(r"(LibreOffice|OpenOffice)+", root)
+                if result:
+                    # found it
+                    return os.path.join(root, "program")
+
+    def LOCheck(self, path):
+        """ test if there is python.exe and soffice.exe """
+        f1 = os.path.join(path, "python.exe")
+        f2 = os.path.join(path, "soffice.exe")
+        if os.path.exists(f1) and os.path.exists(f2):
+            return True
+        else:
+            return False
+
+   
+
+    def convert(self):
+        """ Convert a odt File to html """
+        # C:\"Program Files"\LibreOffice\program\python.exe C:\Users\Stefan\Documents\GitHub\ODT2Html\unoconv.py -f pdf C:\Users\Stefan\Documents\GitHub\ODT2Html\TestFile.odt
+        pass
+        
+        
+    
+    
+    
+
+       
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

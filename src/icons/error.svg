@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 32 32"
+   width="128"
+   height="128"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="error.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:export-filename="C:\Users\Stefan\Documents\GitHub\ODT2Html\src\icons\error.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     width="128px"
+     inkscape:zoom="4.075"
+     inkscape:cx="56.319018"
+     inkscape:cy="60.490798"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <path
+     fill="#f78f8f"
+     d="m 15.999999,30.318534 c -7.8953164,0 -14.3185334,-6.423217 -14.3185334,-14.318535 0,-7.8953163 6.423217,-14.3185333 14.3185334,-14.3185333 7.895318,0 14.318535,6.423217 14.318535,14.3185333 0,7.895318 -6.423217,14.318535 -14.318535,14.318535 z"
+     id="path2"
+     style="stroke-width:0.773975" />
+  <path
+     fill="#c74343"
+     d="M 16,2.0684533 C 23.681701,2.0684533 29.931546,8.3182999 29.931546,16 29.931546,23.681701 23.681701,29.931546 16,29.931546 8.3182999,29.931546 2.0684533,23.681701 2.0684533,16 2.0684533,8.3182999 8.3182999,2.0684533 16,2.0684533 M 16,1.2944785 C 7.8786822,1.2944785 1.2944785,7.8786822 1.2944785,16 1.2944785,24.121317 7.8786822,30.705521 16,30.705521 24.121317,30.705521 30.705521,24.121317 30.705521,16 30.705521,7.8786822 24.121317,1.2944785 16,1.2944785 Z"
+     id="path4"
+     style="stroke-width:0.773975" />
+  <g
+     id="g826"
+     transform="matrix(1.3314265,0,0,1.3314265,-5.302824,-5.302824)"
+     inkscape:export-filename="C:\Users\Stefan\Documents\GitHub\ODT2Html\src\icons\error.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <path
+       fill="#ffffff"
+       d="M 11.347986,22.293672 9.7061664,20.651794 20.652014,9.7063285 l 1.64182,1.6418765 z"
+       id="path6"
+       style="stroke-width:0.773975" />
+    <path
+       fill="#ffffff"
+       d="M 9.7061664,11.348206 11.347986,9.7063285 22.293834,20.651794 20.652014,22.293672 Z"
+       id="path8"
+       style="stroke-width:0.773975" />
+  </g>
+</svg>
