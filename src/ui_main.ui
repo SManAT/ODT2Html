@@ -17,25 +17,48 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
+      <item row="0" column="0" alignment="Qt::AlignTop">
        <widget class="QTabWidget" name="tabWidget">
-        <widget class="QWidget" name="tab">
+        <widget class="QWidget" name="tab1">
          <attribute name="title">
-          <string>Tab 1</string>
+          <string>ODT Datei</string>
          </attribute>
-         <widget class="QPushButton" name="convertBtn">
-          <property name="geometry">
-           <rect>
-            <x>150</x>
-            <y>100</y>
-            <width>75</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Convert</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QWidget" name="dropWidget" native="true">
+            <layout class="QHBoxLayout" name="dropLayout">
+             <property name="leftMargin">
+              <number>40</number>
+             </property>
+             <property name="rightMargin">
+              <number>40</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="convertBtn">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>200</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Dummy - Datei hier ablegen oder klicken</string>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">

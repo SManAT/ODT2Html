@@ -1,6 +1,3 @@
 version: 1
-
 app:
-   # Name of the App
-   LOPath: C:\Profghghram Files\LibreOffice\program  
-
+  LOPath: C:\Program Files\LibreOffice\program

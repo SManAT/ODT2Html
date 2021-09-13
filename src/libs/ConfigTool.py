@@ -4,18 +4,18 @@ import sys
 import os
 
 
-
 class ConfigTool():
     """ a Tool to handel Config File in YAML Style """
     def __init__(self, window):
         self.logger = logging.getLogger('ConfigTool')
         self.window = window
         self.configFile = self.window.configFile
-        
+
     def updateConfig(self):
         """ update the config File """
-        pass
-        
+        with open(self.configFile, 'w') as fp:
+            yaml.dump(self.window.config, fp, sort_keys=False, default_flow_style=False)
+
     def createEmptyConfigFile(self):
         """ will create an Empty Config File """
         data = dict(
@@ -29,7 +29,7 @@ class ConfigTool():
         """ write into the config File """
         with open(self.configFile, 'w') as f:
             yaml.dump(data, f, sort_keys=False, default_flow_style=False)
-        
+
     def load_yml(self):
         """ Load the yaml file config.yaml, or create a dummy FIle """
         if os.path.exists(self.configFile) is False:

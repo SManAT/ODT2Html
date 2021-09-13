@@ -7,9 +7,12 @@ from src.config.LoggerConfiguration import configure_logging
 import logging
 from ui_main import Ui_MainWindow
 from PySide6 import QtGui, QtCore
-from src.ConfigTool import ConfigTool
-from src.Dialogs import Dialogs
+from src.libs.ConfigTool import ConfigTool
+from src.libs.Dialogs import Dialogs
 import re
+from src.libs.DropButton import DropButton
+from PySide6.QtCore import QSize
+
 
 class MainWindow(QMainWindow):
     def __init__(self, screen):
@@ -20,13 +23,17 @@ class MainWindow(QMainWindow):
         self.configFile = os.path.join(self.rootDir, 'src', 'config', 'config.yaml')
         self.configTool = ConfigTool(self)
         self.config = self.configTool.load_yml()
-        
+
         self.dialogs = Dialogs()
 
         # UI Stuff
         self.ui.setupUi(self)
         self.setWindowTitle("ODT2Html Converter")
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'App.ico')))
+        # Drop Button, replace dummy
+        self.replaceButton()
+        
+        
 
         # set Size with Screen
         geometry = screen.availableGeometry()
@@ -35,16 +42,27 @@ class MainWindow(QMainWindow):
         # Connectors
         # self.visibleChanged.connect(self.showwEvent)
         self.ui.convertBtn.clicked.connect(self.convert)
-        
+
         # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
         # self.dialogs.showErrorDialog("Oh dear!", "Something went very wrong.\n\njhghghgi", icon)
-      
+        
+    def replaceButton(self):
+        """ replace dummy Button with DragnDrop Button """
+        # remove from Layout
+        self.ui.dropLayout.removeWidget(self.ui.convertBtn)
+        self.ui.convertBtn.close()
+        self.ui.convertBtn = DropButton("Datei hier ablegen oder klicken", self.ui.dropWidget)
+        self.ui.convertBtn.setMinimumSize(QSize(0, 200))
+        self.ui.convertBtn.setMaximumSize(QSize(16777215, 200))
+        self.ui.convertBtn.setFlat(False)
+        # add to Layout 
+        self.ui.dropLayout.addWidget(self.ui.convertBtn)
+        self.ui.dropLayout.update()
 
     def show(self):
         QMainWindow.show(self)
         QtCore.QTimer.singleShot(500, lambda: self.checkLibreOfficePath())
-        #self.checkLibreOfficePath()
-        
+
     def showStatusMessage(self, msg, time):
         """ show a Statusmessage now """
         self.ui.statusbar.showMessage(msg, time)
@@ -53,8 +71,7 @@ class MainWindow(QMainWindow):
     def checkLibreOfficePath(self):
         """ search for LO if its set probably """
         self.showStatusMessage("Searching for LibreOffice Path ...", 2000)
-        
-        
+
         loPath = self.config['app']['LOPath']
         # test if there is python.exe and soffice.exe
         if self.LOCheck(loPath) is True:
@@ -64,12 +81,13 @@ class MainWindow(QMainWindow):
             # check again
             if self.LOCheck(self.LOPath) is False:
                 icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
-                self.dialogs.showErrorDialog("Error!", "Can't find path to LibreOffice\nPlease set it manualy in config.yaml ...", icon)
-        
+                self.dialogs.showErrorDialog("Error!", "Can't find path to LibreOffice\nPlease set it manually in config.yaml ...", icon)
+
         self.showStatusMessage("Found a Path to LibreOffice ...", 2000)
         # write Back to Config
-        #self.updateConfig()
-            
+        self.config['app']['LOPath'] = self.LOPath
+        self.configTool.updateConfig()
+
     def searchLO(self):
         """ search for Libre Office """
         paths = ["C:\\Program Files", "C:\\Program Files (x86)"]
@@ -90,11 +108,12 @@ class MainWindow(QMainWindow):
         else:
             return False
 
-   
+
 
     def convert(self):
         """ Convert a odt File to html """
         # C:\"Program Files"\LibreOffice\program\python.exe C:\Users\Stefan\Documents\GitHub\ODT2Html\unoconv.py -f pdf C:\Users\Stefan\Documents\GitHub\ODT2Html\TestFile.odt
+        print("OK")
         pass
         
         

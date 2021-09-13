@@ -26,17 +26,32 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.convertBtn = QPushButton(self.tab)
+        self.tab1 = QWidget()
+        self.tab1.setObjectName(u"tab1")
+        self.verticalLayout = QVBoxLayout(self.tab1)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.dropWidget = QWidget(self.tab1)
+        self.dropWidget.setObjectName(u"dropWidget")
+        self.dropLayout = QHBoxLayout(self.dropWidget)
+        self.dropLayout.setObjectName(u"dropLayout")
+        self.dropLayout.setContentsMargins(40, -1, 40, -1)
+        self.convertBtn = QPushButton(self.dropWidget)
         self.convertBtn.setObjectName(u"convertBtn")
-        self.convertBtn.setGeometry(QRect(150, 100, 75, 24))
-        self.tabWidget.addTab(self.tab, "")
+        self.convertBtn.setMinimumSize(QSize(0, 200))
+        self.convertBtn.setMaximumSize(QSize(16777215, 200))
+        self.convertBtn.setFlat(False)
+
+        self.dropLayout.addWidget(self.convertBtn)
+
+
+        self.verticalLayout.addWidget(self.dropWidget)
+
+        self.tabWidget.addTab(self.tab1, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
         self.tabWidget.addTab(self.tab_2, "")
 
-        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1, Qt.AlignTop)
 
 
         self.gridLayout.addLayout(self.gridLayout_2, 0, 0, 1, 1)
@@ -48,6 +63,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
+        self.statusbar.setStyleSheet(u"border-top: 1px #a0a0a0 solid;")
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
@@ -57,8 +73,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.convertBtn.setText(QCoreApplication.translate("MainWindow", u"Convert", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.convertBtn.setText(QCoreApplication.translate("MainWindow", u"Dummy - Datei hier ablegen oder klicken", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), QCoreApplication.translate("MainWindow", u"ODT Datei", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Tab 2", None))
     # retranslateUi
 
