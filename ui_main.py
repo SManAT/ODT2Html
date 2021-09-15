@@ -39,6 +39,9 @@ class Ui_MainWindow(object):
         self.convertBtn.setObjectName(u"convertBtn")
         self.convertBtn.setMinimumSize(QSize(0, 200))
         self.convertBtn.setMaximumSize(QSize(16777215, 200))
+        self.convertBtn.setStyleSheet(u"background-color: #bfffbf;\n"
+"font-size: 18pt;\n"
+"border: 1px solid #aaaaaa;")
         self.convertBtn.setFlat(False)
 
         self.dropLayout.addWidget(self.convertBtn)

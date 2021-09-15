@@ -47,6 +47,11 @@
                  <height>200</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #bfffbf;
+font-size: 18pt;
+border: 1px solid #aaaaaa;</string>
+               </property>
                <property name="text">
                 <string>Dummy - Datei hier ablegen oder klicken</string>
                </property>

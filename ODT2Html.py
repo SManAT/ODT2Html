@@ -2,7 +2,8 @@ import sys
 
 from pathlib import Path
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog,\
+    QGraphicsOpacityEffect
 from src.config.LoggerConfiguration import configure_logging
 import logging
 from ui_main import Ui_MainWindow
@@ -32,8 +33,6 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'App.ico')))
         # Drop Button, replace dummy
         self.replaceButton()
-        
-        
 
         # set Size with Screen
         geometry = screen.availableGeometry()
@@ -41,7 +40,7 @@ class MainWindow(QMainWindow):
 
         # Connectors
         # self.visibleChanged.connect(self.showwEvent)
-        self.ui.convertBtn.clicked.connect(self.convert)
+        self.ui.convertBtn.clicked.connect(self.openFileNameDialog)
 
         # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
         # self.dialogs.showErrorDialog("Oh dear!", "Something went very wrong.\n\njhghghgi", icon)
@@ -51,11 +50,13 @@ class MainWindow(QMainWindow):
         # remove from Layout
         self.ui.dropLayout.removeWidget(self.ui.convertBtn)
         self.ui.convertBtn.close()
-        self.ui.convertBtn = DropButton("Datei hier ablegen oder klicken", self.ui.dropWidget)
+        self.ui.convertBtn = DropButton("Datei hier ablegen oder klicken", self)
         self.ui.convertBtn.setMinimumSize(QSize(0, 200))
         self.ui.convertBtn.setMaximumSize(QSize(16777215, 200))
-        self.ui.convertBtn.setFlat(False)
-        # add to Layout 
+        self.ui.convertBtn.setFlat(True)
+        self.ui.convertBtn.setStyleSheet(u"background-color: #bfffbf;font-size: 18pt;border: 1px solid #aaaaaa;")
+        
+        # add to Layout
         self.ui.dropLayout.addWidget(self.ui.convertBtn)
         self.ui.dropLayout.update()
 
@@ -108,13 +109,23 @@ class MainWindow(QMainWindow):
         else:
             return False
 
+    def openFileNameDialog(self):
+        """ File Open Dialog """
+        options = QFileDialog.Options()
+        fileName, _ = QFileDialog.getOpenFileName(self,
+                                                  "Select a File to convert",
+                                                  "",
+                                                  "Libre Office Writer (*.odt)",
+                                                  options=options
+                                                  )
+        if fileName:
+            self.convert(fileName)
 
-
-    def convert(self):
+    def convert(self, filename):
         """ Convert a odt File to html """
         # C:\"Program Files"\LibreOffice\program\python.exe C:\Users\Stefan\Documents\GitHub\ODT2Html\unoconv.py -f pdf C:\Users\Stefan\Documents\GitHub\ODT2Html\TestFile.odt
-        print("OK")
-        pass
+        self.logger.info("Converting File: %s" % filename)
+        
         
         
     
