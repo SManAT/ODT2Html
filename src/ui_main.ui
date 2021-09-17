@@ -25,6 +25,18 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Bitte eine *.odt Datei angeben. &lt;br/&gt;Diese Datei wird im Anschluss&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;1. Nach Html konvertiert.&lt;br/&gt;2. Für eine Webseite mit passendem CSS ausgestattet.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Im Anschluss kann man den Html Code in einer Webseite mit Html Editoren verwenden.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QWidget" name="dropWidget" native="true">
             <layout class="QHBoxLayout" name="dropLayout">
              <property name="leftMargin">

@@ -2,8 +2,7 @@ import sys
 
 from pathlib import Path
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog,\
-    QGraphicsOpacityEffect
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from src.config.LoggerConfiguration import configure_logging
 import logging
 from ui_main import Ui_MainWindow
@@ -13,6 +12,8 @@ from src.libs.Dialogs import Dialogs
 import re
 from src.libs.DropButton import DropButton
 from PySide6.QtCore import QSize
+from src.libs.Unoconverter import Unoconverter
+from pathlib import Path
 
 
 class MainWindow(QMainWindow):
@@ -42,9 +43,12 @@ class MainWindow(QMainWindow):
         # self.visibleChanged.connect(self.showwEvent)
         self.ui.convertBtn.clicked.connect(self.openFileNameDialog)
 
+        self.unoconv = Unoconverter()
+        self.unoconv.finished.connect(self.unoconvertDone)
+
         # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
         # self.dialogs.showErrorDialog("Oh dear!", "Something went very wrong.\n\njhghghgi", icon)
-        
+
     def replaceButton(self):
         """ replace dummy Button with DragnDrop Button """
         # remove from Layout
@@ -55,7 +59,7 @@ class MainWindow(QMainWindow):
         self.ui.convertBtn.setMaximumSize(QSize(16777215, 200))
         self.ui.convertBtn.setFlat(True)
         self.ui.convertBtn.setStyleSheet(u"background-color: #bfffbf;font-size: 18pt;border: 1px solid #aaaaaa;")
-        
+
         # add to Layout
         self.ui.dropLayout.addWidget(self.ui.convertBtn)
         self.ui.dropLayout.update()
@@ -64,7 +68,12 @@ class MainWindow(QMainWindow):
         QMainWindow.show(self)
         QtCore.QTimer.singleShot(500, lambda: self.checkLibreOfficePath())
 
-    def showStatusMessage(self, msg, time):
+    def clearMessage(self):
+        """ clear the Stausbar Message """
+        self.ui.statusbar.clearMessage()
+        QApplication.processEvents()
+
+    def showStatusMessage(self, msg, time = 0):
         """ show a Statusmessage now """
         self.ui.statusbar.showMessage(msg, time)
         QApplication.processEvents()
@@ -123,9 +132,19 @@ class MainWindow(QMainWindow):
 
     def convert(self, filename):
         """ Convert a odt File to html """
-        # C:\"Program Files"\LibreOffice\program\python.exe C:\Users\Stefan\Documents\GitHub\ODT2Html\unoconv.py -f pdf C:\Users\Stefan\Documents\GitHub\ODT2Html\TestFile.odt
         self.logger.info("Converting File: %s" % filename)
+
+        # Start the Thread
+        self.unoconv.setFile(filename)
+        self.unoconv.start()
+        self.showStatusMessage("Converting %s to Html ..." % Path(filename).stem)
         
+        
+    def unoconvertDone(self):
+        """ will be fired when unoconv finished converting a ODT Document """
+        
+        self.clearMessage()
+        self.showStatusMessage("Converting done ...")
         
         
     

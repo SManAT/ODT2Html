@@ -1,8 +1,8 @@
 # ODT2Html
 
-Converts ODT Files into Html Files
+Converts ODT Files into Html Files, only for WIN Systems
 
-## Unoconv
+## Needs Unoconv
 
 1. Download from https://github.com/unoconv/unoconv
    File unoconv
@@ -12,4 +12,10 @@ Converts ODT Files into Html Files
 
 # Configuration
 
-"C:\Program Files", "C:\Program Files (x86)" or in config.yaml
+You configure the behavor in `config.yaml`
+
+```yaml
+# where to find LibreOffice, will be detected automatically
+# will search for LO in "C:\Program Files", "C:\Program Files (x86)"
+LOPath: C:\"Program Files"\LibreOff.....
+```
