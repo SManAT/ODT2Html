@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         # self.visibleChanged.connect(self.showwEvent)
         self.ui.convertBtn.clicked.connect(self.openFileNameDialog)
 
-        self.unoconv = Unoconverter()
+        self.unoconv = Unoconverter(self.rootDir)
         self.unoconv.finished.connect(self.unoconvertDone)
 
         # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
@@ -136,6 +136,7 @@ class MainWindow(QMainWindow):
 
         # Start the Thread
         self.unoconv.setFile(filename)
+        self.unoconv.setLOPath(self.LOPath)
         self.unoconv.start()
         self.showStatusMessage("Converting %s to Html ..." % Path(filename).stem)
         
