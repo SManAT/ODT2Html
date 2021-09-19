@@ -12,8 +12,8 @@ from src.libs.Dialogs import Dialogs
 import re
 from src.libs.DropButton import DropButton
 from PySide6.QtCore import QSize
-from src.libs.Unoconverter import Unoconverter
-from pathlib import Path
+from src.worker.Unoconverter import Unoconverter
+from PyQt6.QtCore import QThread
 
 
 class MainWindow(QMainWindow):
@@ -42,10 +42,6 @@ class MainWindow(QMainWindow):
         # Connectors
         # self.visibleChanged.connect(self.showwEvent)
         self.ui.convertBtn.clicked.connect(self.openFileNameDialog)
-
-        self.unoconv = Unoconverter(self.rootDir)
-        self.unoconv.finished.connect(self.unoconvertDone)
-
         # icon = QtGui.QIcon(os.path.join(self.rootDir, 'src', 'icons', 'error.png'))
         # self.dialogs.showErrorDialog("Oh dear!", "Something went very wrong.\n\njhghghgi", icon)
 
@@ -69,11 +65,11 @@ class MainWindow(QMainWindow):
         QtCore.QTimer.singleShot(500, lambda: self.checkLibreOfficePath())
 
     def clearMessage(self):
-        """ clear the Stausbar Message """
+        """ clear the Statusbar Message """
         self.ui.statusbar.clearMessage()
         QApplication.processEvents()
 
-    def showStatusMessage(self, msg, time = 0):
+    def showStatusMessage(self, msg, time=0):
         """ show a Statusmessage now """
         self.ui.statusbar.showMessage(msg, time)
         QApplication.processEvents()
@@ -133,26 +129,31 @@ class MainWindow(QMainWindow):
     def convert(self, filename):
         """ Convert a odt File to html """
         self.logger.info("Converting File: %s" % filename)
-
-        # Start the Thread
-        self.unoconv.setFile(filename)
-        self.unoconv.setLOPath(self.LOPath)
-        self.unoconv.start()
         self.showStatusMessage("Converting %s to Html ..." % Path(filename).stem)
-        
-        
+        # Start the Thread
+        self.unoconv = Unoconverter(self.rootDir)
+        self.unoconvThread = QThread()  # no parent!
+        try:
+            self.unoconv.setFile(filename)
+            self.unoconv.setLOPath(self.LOPath)
+            # Move the Worker object to the Thread object
+            self.unoconv.moveToThread(self.unoconvThread)
+            # entry point from Thread
+            self.unoconvThread.started.connect(self.unoconv.convert)
+            # connect signal
+            self.unoconv.finished.connect(self.unoconvThread.quit)
+            self.unoconvThread.finished.connect(self.unoconvertDone)
+
+            self.unoconvThread.start()
+        except Exception as e:
+            self.logger.error(e)
+
     def unoconvertDone(self):
         """ will be fired when unoconv finished converting a ODT Document """
-        
+        print("done")
         self.clearMessage()
         self.showStatusMessage("Converting done ...")
-        
-        
-    
-    
-    
 
-       
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
