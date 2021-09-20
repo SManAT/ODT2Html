@@ -31,20 +31,15 @@ class Unoconverter(QObject):
         if self.LOPath is None:
             self.logger.error("No Path to Libre Office is set ... exit")
             sys.exit(-1)
-
-        print("XXX")
-
         self.copyODT2TempDir()
 
         batchPath = self.createBatchFile()
-        print("batch")
-
-        """
         worker = CmdRunner()
         worker.runCmd(batchPath)
-        self.logger.info(worker.getStderr())
-        self.logger.info(worker.getStdout())
-        """
+        if worker.getStderr() != "":
+            self.logger.info(worker.getStderr())
+        if worker.getStdout() != "":
+            self.logger.info(worker.getStdout())
 
         self.finished.emit()
 

@@ -12,8 +12,8 @@ from src.libs.Dialogs import Dialogs
 import re
 from src.libs.DropButton import DropButton
 from PySide6.QtCore import QSize
-from src.worker.Unoconverter import Unoconverter
 from PyQt6.QtCore import QThread
+from src.worker.Unoconverter import Unoconverter
 
 
 class MainWindow(QMainWindow):
@@ -150,9 +150,10 @@ class MainWindow(QMainWindow):
 
     def unoconvertDone(self):
         """ will be fired when unoconv finished converting a ODT Document """
-        print("done")
         self.clearMessage()
         self.showStatusMessage("Converting done ...")
+        # switch to new Tab
+        self.ui.tabWidget.setCurrentIndex(1)
 
 
 if __name__ == "__main__":

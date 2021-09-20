@@ -58,9 +58,9 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.dropWidget)
 
         self.tabWidget.addTab(self.tab1, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
+        self.tab2 = QWidget()
+        self.tab2.setObjectName(u"tab2")
+        self.tabWidget.addTab(self.tab2, "")
 
         self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1, Qt.AlignTop)
 
@@ -79,6 +79,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
+        self.tabWidget.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
@@ -87,6 +90,6 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Bitte eine *.odt Datei angeben. <br/>Diese Datei wird im Anschluss</span></p><p><span style=\" font-size:12pt;\">1. Nach Html konvertiert.<br/>2. F\u00fcr eine Webseite mit passendem CSS ausgestattet.</span></p><p><span style=\" font-size:12pt;\">Im Anschluss kann man den Html Code in einer Webseite mit Html Editoren verwenden.</span></p></body></html>", None))
         self.convertBtn.setText(QCoreApplication.translate("MainWindow", u"Dummy - Datei hier ablegen oder klicken", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), QCoreApplication.translate("MainWindow", u"ODT Datei", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Tab 2", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), QCoreApplication.translate("MainWindow", u"Html Code", None))
     # retranslateUi
 
